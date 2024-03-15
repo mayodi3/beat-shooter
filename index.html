@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Invaders</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- First Page -->
+    <img id="play" src="assets/UI/play.png" >
+    <img src="assets/logo/GameLogo.png" id="gameLogo" />
+
+    <!-- Audio Data Setup -->
+    <div id="audio">
+      <input type="file" id="fileUpload" />
+      <audio id="audio1" controls autoplay></audio>
+    </div>
+
+    <!-- Second page -->
+    <div id="largeContainer">
+      <img src="assets/backgrounds/MenuBg.png" id="MenuBg" />
+
+      <div id="buttonsContainer">
+        <div id="controls">
+          <img src="assets/UI/optionsButton.png" id="optionsButton" />
+        </div>
+        <div id="controls">
+          <img src="assets/UI/levelButton.png" id="levelButton" />
+        </div>
+        <div id="controls">
+          <img src="assets/UI/shopButton.png" id="shopButton" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Third Page -->
+      <div class="level-buttons">
+        <div><p id="paragraph">1</p><img src="assets/UI/level1.png" id="level1Button"></img></div>
+        <div><p id="paragraph">2</p><img src="assets/UI/level1.png" id="level2Button"></img></div>
+        <div><p id="paragraph">3</p><img src="assets/UI/level1.png" id="level3Button"></img></div>
+        <div><p id="paragraph">4</p><img src="assets/UI/level1.png" id="level4Button"></img></div>
+        <div><p id="paragraph">5</p><img src="assets/UI/level1.png" id="level5Button"></img></div>
+        <div><p id="paragraph">6</p><img src="assets/UI/level1.png" id="level6Button"></img></div>
+        <div><p id="paragraph">7</p><img src="assets/UI/level1.png" id="level7Button"></img></div>
+      </div>
+
+      <!-- Fourth Page -->
+    <canvas id="canvas1"></canvas>
+    <div class="controls">
+      <img src="assets/UI/ArrowLeft.png" id="leftButton" />
+      <img src="assets/UI/ArrowRight.png" id="rightButton" />
+      <button id="smallaserBtn">S</button>
+      <button id="biglaserBtn">B</button>
+    </div>
+
+    <!-- Invisible ones -->
+    <div class="assets">
+      <!-- Enemies -->
+      <img src="assets/enemies/beetle.png" id="beetle" />
+      <img src="assets/enemies/rhinocrack.png" id="rhinocrack" />
+      <img src="assets/enemies/eagleshoot.png" id="eagleshoot" />
+      <img src="assets/enemies/lobsterburst.png" id="lobsterburst" />
+      <img src="assets/enemies/phantom.png" id="phantom" />
+      <img src="assets/enemies/squidward.png" id="squidward" />
+      <img src="assets/enemies/locust.png" id="locust" />
+      <img
+        src="assets/utilities/eagleshootprojectile.png"
+        id="eagleshootprojectile"
+      />
+      <!-- Player -->
+      <img src="assets/players/ship.png" id="ship" />
+      <img src="assets/utilities/shipJets.png" id="shipJets" />
+      <!-- Boss -->
+      <img src="assets/enemies/boss.png" id="boss" />
+    </div>
+
+    <!-- Sounds to play -->
+    <audio src="assets/sounds/boss.wav" id="bossound"></audio>
+    <audio src="assets/sounds/lose.mp3" id="lose"></audio>
+    <audio src="assets/sounds/newgame.mp3" id="newGame"></audio>
+
+    <script src="engine.js" type="module"></script>
+  </body>
+</html>
