@@ -22,6 +22,25 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+#arrowDown1 {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#arrowDown2 {
+  display: none;
+}
+#text {
+  font-family: "Bangers";
+  font-size: xx-large;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  color: rgb(0, 217, 255);
+  transform: translate(-50%, -50%);
+}
 
 /* Canvas styling */
 #canvas1 {
@@ -141,7 +160,7 @@ body {
 #level5Button:hover,
 #level6Button:hover,
 #level7Button:hover {
-  transform: scale(1.3);
+  transform: scale(0.8);
 }
 
 /* Audio positiong */
@@ -163,8 +182,17 @@ body {
 .assets,
 .controls,
 .level-buttons,
-#largeContainer {
+#largeContainer,
+#counter,
+#audioCounter,
+#menuMusic {
   display: none;
+}
+#counter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @media screen and (min-width: 520px) {
@@ -173,5 +201,20 @@ body {
     z-index: 1;
     width: 450px;
     height: 400px;
+  }
+}
+@media screen and (max-width: 520px) {
+  #gameLogo {
+    top: 20%;
+    z-index: 1;
+    width: 450px;
+    height: 400px;
+  }
+  #arrowDown2 {
+    display: block;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }

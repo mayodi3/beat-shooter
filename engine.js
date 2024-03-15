@@ -3,9 +3,10 @@ import Game from "./scripts/game.js";
 let gamePaused = false;
 window.addEventListener("load", function () {
   // Page 1
-  const play = document.getElementById("play");
+  // const play = document.getElementById("play");
+  const firstPage = document.getElementById("firstPage");
   play.addEventListener("click", () => {
-    play.style.display = "none";
+    firstPage.style.display = "none";
     document.getElementById("largeContainer").style.display = "block";
   });
   // Level buttons setup - PAGE 3
@@ -25,14 +26,27 @@ window.addEventListener("load", function () {
   level6Button.addEventListener("click", () => startGame(6));
   level7Button.addEventListener("click", () => startGame(7));
 
+  const counter = document.getElementById("counter");
+  const audioCounter = document.getElementById("audioCounter");
+  const menuMusic = document.getElementById("menuMusic");
   function startGame(level) {
     levelButtons.style.display = "none";
-    canvas.style.display = "block";
-    controls.style.display = "block";
-    audio.style.display = "block";
-    game.level = level;
-    game.restart();
-    animate(0);
+    canvas.style.display = "none";
+    controls.style.display = "none";
+    audio.style.display = "none";
+    counter.style.display = "block";
+    menuMusic.pause();
+    audioCounter.play();
+    setTimeout(() => {
+      counter.style.display = "none";
+      canvas.style.display = "block";
+      controls.style.display = "block";
+      audio.style.display = "block";
+      audioCounter.pause();
+      game.level = level;
+      game.restart();
+      animate(0);
+    }, 5000);
     window.addEventListener("keydown", (e) => {
       if (e.key === "p") {
         gamePaused = !gamePaused;

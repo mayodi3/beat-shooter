@@ -3,13 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Space Invaders</title>
+    <title>BEAT SHOOTER</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <!-- First Page -->
-    <img id="play" src="assets/UI/play.png" >
-    <img src="assets/logo/GameLogo.png" id="gameLogo" />
+    <div id="firstPage">
+      <img id="play" src="assets/UI/play.png" >
+      <img src="assets/logo/GameLogo.png" id="gameLogo" />
+      <h2 id="text">CLICK HERE TO PLAY !</h2>
+      <img src="assets/UI/arrowDown.gif"  id="arrowDown1">
+    </div>
 
     <!-- Audio Data Setup -->
     <div id="audio">
@@ -19,33 +23,41 @@
 
     <!-- Second page -->
     <div id="largeContainer">
+      <img src="assets/UI/arrowDown.gif"  id="arrowDown2">
       <img src="assets/backgrounds/MenuBg.png" id="MenuBg" />
 
       <div id="buttonsContainer">
-        <div id="controls">
+        <!-- <div id="controls">
           <img src="assets/UI/optionsButton.png" id="optionsButton" />
-        </div>
+        </div> -->
         <div id="controls">
           <img src="assets/UI/levelButton.png" id="levelButton" />
         </div>
-        <div id="controls">
+        <!-- <div id="controls">
           <img src="assets/UI/shopButton.png" id="shopButton" />
-        </div>
+        </div> -->
       </div>
     </div>
 
     <!-- Third Page -->
-      <div class="level-buttons">
-        <div><p id="paragraph">1</p><img src="assets/UI/level1.png" id="level1Button"></img></div>
-        <div><p id="paragraph">2</p><img src="assets/UI/level1.png" id="level2Button"></img></div>
-        <div><p id="paragraph">3</p><img src="assets/UI/level1.png" id="level3Button"></img></div>
-        <div><p id="paragraph">4</p><img src="assets/UI/level1.png" id="level4Button"></img></div>
-        <div><p id="paragraph">5</p><img src="assets/UI/level1.png" id="level5Button"></img></div>
-        <div><p id="paragraph">6</p><img src="assets/UI/level1.png" id="level6Button"></img></div>
-        <div><p id="paragraph">7</p><img src="assets/UI/level1.png" id="level7Button"></img></div>
-      </div>
+    <div class="level-buttons">
+      <div><p id="paragraph">1</p><img src="assets/UI/level1.png" id="level1Button"></img></div>
+      <div><p id="paragraph">2</p><img src="assets/UI/level1.png" id="level2Button"></img></div>
+      <div><p id="paragraph">3</p><img src="assets/UI/level1.png" id="level3Button"></img></div>
+      <div><p id="paragraph">4</p><img src="assets/UI/level1.png" id="level4Button"></img></div>
+      <div><p id="paragraph">5</p><img src="assets/UI/level1.png" id="level5Button"></img></div>
+      <div><p id="paragraph">6</p><img src="assets/UI/level1.png" id="level6Button"></img></div>
+      <div><p id="paragraph">7</p><img src="assets/UI/level1.png" id="level7Button"></img></div>
+    </div>
 
-      <!-- Fourth Page -->
+    <!-- Counter Page -->
+    <img src="assets/UI/counter.gif" id="counter">
+    <audio src="assets/sounds/counter.mp3" id="audioCounter"></audio>
+
+    <!-- Background menu music -->
+    <audio src="assets/sounds/background.mp3" id="menuMusic" autoplay loop></audio>
+
+    <!-- Fourth Page -->
     <canvas id="canvas1"></canvas>
     <div class="controls">
       <img src="assets/UI/ArrowLeft.png" id="leftButton" />
