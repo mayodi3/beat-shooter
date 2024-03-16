@@ -167,7 +167,7 @@ body {
 #audio {
   display: none;
 }
-#fileUpload {
+/* #fileUpload {
   position: absolute;
   right: -50px;
 }
@@ -175,7 +175,8 @@ body {
   position: absolute;
   width: 200px;
   height: 20px;
-}
+  z-index: 2;
+} */
 
 /* Hidden elements */
 .hidden,
