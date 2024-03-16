@@ -9,6 +9,7 @@ export default class Enemy {
     this.positionY = positionY;
     this.markedForDeletion = false;
     this.resize();
+    this.collisionDetected = false;
   }
   draw(context) {
     context.drawImage(
@@ -23,7 +24,7 @@ export default class Enemy {
       this.height
     );
   }
-  update(x, y) {
+  update(x, y, deltaTime) {
     this.x = x + this.positionX;
     this.y = y + this.positionY;
     // check collision enemies - projectiles
@@ -33,9 +34,10 @@ export default class Enemy {
         this.game.checkCollision(this, projectile) &&
         this.lives > 0
       ) {
+        this.collisionDetected = true;
         this.hit(1);
         projectile.reset();
-      }
+      } else this.collisionDetected = false; // state design pattern
     });
     if (this.lives < 1) {
       if (this.game.spriteUpdate) this.frameX++;
@@ -51,7 +53,6 @@ export default class Enemy {
     }
     // lose condition
     if (this.y + this.height > this.game.height || this.game.player.lives < 1) {
-      this.game.loseSound.play();
       this.game.gameOver = true;
     }
   }

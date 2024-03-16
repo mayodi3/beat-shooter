@@ -139,7 +139,7 @@ export default class Game {
       (object) => !object.markedForDeletion
     );
     this.waves.forEach((wave) => {
-      wave.render(context);
+      wave.render(context, deltaTime);
       if (wave.enemies.length < 1 && !wave.nextWaveTrigger && !this.gameOver) {
         this.newWave(this.level);
         wave.nextWaveTrigger = true;

@@ -8,7 +8,6 @@ export class SmallLaser extends Laser {
   }
   render(context) {
     if (this.game.player.energy > 1 && !this.game.player.cooldown) {
-      // this.game.audioHandler.startLaser("smallaser");
       super.render(context);
       this.game.player.frameX = 2;
     }
@@ -27,7 +26,6 @@ export class BigLaser extends Laser {
   }
   render(context) {
     if (this.game.player.energy > 1 && !this.game.player.cooldown) {
-      // this.game.audioHandler.startLaser("biglaser");
       super.render(context);
       this.game.player.frameX = 3;
     }
