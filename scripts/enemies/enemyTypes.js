@@ -12,6 +12,7 @@ export class Beetle extends Enemy {
   }
   update(x, y) {
     super.update(x, y);
+    if (this.markedForDeletion) this.game.audioHandler.playSound("beetle");
     this.game.waves.forEach((wave) => {
       wave.speedY += Math.cos((wave.angle += 0.01));
     });
@@ -34,6 +35,7 @@ export class RhinoCrack extends Enemy {
   }
   update(x, y) {
     super.update(x, y);
+    if (this.markedForDeletion) this.game.audioHandler.playSound("rhinocrack");
     this.game.waves.forEach((wave) => {
       wave.speedX += Math.sin(0.01);
     });
@@ -56,6 +58,8 @@ export class LobsterBurst extends Enemy {
   }
   update(x, y) {
     super.update(x, y);
+    if (this.markedForDeletion)
+      this.game.audioHandler.playSound("lobsterburst");
     this.game.waves.forEach((wave) => {
       wave.speedX += Math.sin(-0.01);
     });
@@ -100,6 +104,7 @@ export class Locust extends Enemy {
       this.markedForDeletion = true;
       if (!this.game.gameOver) this.game.score += this.maxLives;
     }
+    if (this.markedForDeletion) this.game.audioHandler.playSound("locust");
   }
 }
 class LocustFlyingState {
@@ -119,6 +124,7 @@ class LocustSpeedState {
   }
   startState() {
     this.locust.frameY = 1;
+    this.locust.game.audioHandler.playSound("locustslide");
     this.locust.game.waves.forEach((wave) => {
       wave.speedX *= 1.2;
     });
@@ -165,6 +171,7 @@ export class SquidWard extends Enemy {
       wave.speedY += Math.sin(wave.angle * 20);
       wave.speedX += Math.sin(wave.angle * 20);
     });
+    if (this.markedForDeletion) this.game.audioHandler.playSound("tentacles");
   }
 }
 class TentacleState {
@@ -173,7 +180,7 @@ class TentacleState {
   }
   startState() {
     this.squid.frameX = 0;
-    this.squid.maxFrame = 7;
+    this.squid.maxFrame = 4;
   }
   updateState() {
     if (this.squid.game.spriteUpdate) {
@@ -222,8 +229,13 @@ export class EagleShoot extends Enemy {
     const projectile = this.game.getEnemyProjectile();
     if (projectile) {
       projectile.start(this.x + this.width * 0.5, this.y + this.height * 0.5);
+      this.game.audioHandler.playSound("eagleScream");
       this.shots++;
     }
+  }
+  update(x, y, deltaTime) {
+    super.update(x, y, deltaTime);
+    if (this.markedForDeletion) this.game.audioHandler.playSound("eagle");
   }
 }
 
@@ -251,6 +263,7 @@ export class Phantom extends Enemy {
   }
   update(x, y, deltaTime) {
     super.update(x, y, deltaTime);
+    if (this.markedForDeletion) this.game.audioHandler.playSound("phantom");
     this.currentState.updateState(deltaTime);
   }
   setState(state) {

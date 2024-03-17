@@ -48,7 +48,7 @@ export default class InputHandler {
     window.addEventListener("touchstart", () => {
       if (!this.game.fired) {
         this.game.player.frameX = 1;
-        this.game.audioHandler.shoot();
+        this.game.audioHandler.playSound("shoot", 3);
         this.game.fired = true;
         this.game.player.shoot();
       }
@@ -65,7 +65,7 @@ export default class InputHandler {
       if (this.keys.includes("1") && !this.game.fired) {
         this.game.player.frameX = 1;
         this.game.fired = true;
-        this.game.audioHandler.shoot();
+        this.game.audioHandler.playSound("shoot", 3);
         this.game.player.shoot();
       } else this.game.player.frameX = 0;
       if (this.keys.includes("r") && this.game.gameOver) this.game.restart();
@@ -127,7 +127,7 @@ export default class InputHandler {
 
       // Handle shooting
       if (shootPressed && !this.game.fired) {
-        this.game.audioHandler.shoot();
+        this.game.audioHandler.playSound("shoot", 3);
         this.game.player.shoot();
         this.game.fired = true;
       } else if (!shootPressed) {

@@ -73,8 +73,13 @@ export default class Boss {
       ) {
         this.hit(1);
         projectile.reset();
+        if (this.lives % 10 === 0) {
+          this.game.audioHandler.playSound("bossScream");
+          this.speedX *= 2;
+        }
       }
     });
+
     // collision detection boss/player
     if (this.game.checkCollision(this, this.game.player) && this.lives >= 1) {
       this.game.gameOver = true;
@@ -82,6 +87,7 @@ export default class Boss {
     }
     // boss destroyed
     if (this.lives < 1 && this.game.spriteUpdate) {
+      this.game.audioHandler.playSound("bossExplode");
       this.frameX++;
       if (this.frameX > this.maxFrame) {
         this.markedForDeletion = true;

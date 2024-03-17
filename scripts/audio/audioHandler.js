@@ -4,24 +4,40 @@ export default class AudioHandler {
       window.webkitAudioContext)();
     this.sounds = {};
     this.laserSoundNode = null;
+
+    this.beetle = document.getElementById("beetle-sound");
   }
 
-  loadSound(key, src) {
-    fetch(src)
-      .then((response) => response.arrayBuffer())
-      .then((arrayBuffer) => this.audioContext.decodeAudioData(arrayBuffer))
-      .then((audioBuffer) => {
-        this.sounds[key] = audioBuffer;
-      })
-      .catch((e) => console.error(e));
+  async loadSound(key, src) {
+    try {
+      const response = await fetch(src);
+      const arrayBuffer = await response.arrayBuffer();
+      const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+      this.sounds[key] = audioBuffer;
+    } catch (error) {
+      console.error("Error loading sound:", error);
+    }
   }
 
-  playSound(key) {
-    const sound = this.audioContext.createBufferSource();
-    sound.buffer = this.sounds[key];
-    sound.connect(this.audioContext.destination);
-    sound.start();
-    return sound;
+  playSound(key, maxOverlap = 3) {
+    if (!this.sounds[key]) {
+      console.warn(`Sound not found: ${key}`);
+      return;
+    }
+    // Sound overlap management
+    const activeSources = Object.values(this.sounds).filter(
+      (sound) => sound.buffer === this.sounds[key] && !sound.ended
+    );
+    if (activeSources.length >= maxOverlap) return; // Limit reached, skip playing this sound
+    // Create and play the sound
+    const source = this.audioContext.createBufferSource();
+    source.buffer = this.sounds[key];
+    // Introduce subtle pitch variations for realism
+    const randomDetune = (Math.random() - 0.5) * 10; // Up to +/- 10 cents
+    source.detune.value = randomDetune;
+    source.connect(this.audioContext.destination);
+    source.start(0);
+    return source;
   }
 
   startLaser(key) {
@@ -40,9 +56,5 @@ export default class AudioHandler {
       this.laserSoundNode.disconnect();
       this.laserSoundNode = null;
     }
-  }
-
-  shoot() {
-    this.playSound("shoot");
   }
 }

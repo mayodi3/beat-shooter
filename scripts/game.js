@@ -21,10 +21,7 @@ export default class Game {
     this.data = new AudioData();
     this.ui = new UI(this);
 
-    this.audioHandler.loadSound("shoot", "assets/sounds/shoot.wav");
-    this.audioHandler.loadSound("boss", "assets/sounds/boss.wav");
-    this.audioHandler.loadSound("smallaser", "assets/sounds/smallaser.mp3");
-    this.audioHandler.loadSound("biglaser", "assets/sounds/biglaser.wav");
+    this.loadSounds();
 
     this.projectilesPool = [];
     this.numberOfProjectiles = 15;
@@ -90,6 +87,26 @@ export default class Game {
     this.projectilesPool.forEach((projectile) => {
       projectile.resize();
     });
+  }
+  loadSounds() {
+    this.audioHandler.loadSound("shoot", "assets/sounds/shoot.wav");
+    this.audioHandler.loadSound("smallaser", "assets/sounds/smallaser.mp3");
+    this.audioHandler.loadSound("biglaser", "assets/sounds/biglaser.wav");
+    // Enemies sounds
+    this.audioHandler.loadSound("beetle", "assets/sounds/beetle.wav");
+    this.audioHandler.loadSound("locust", "assets/sounds/locust.mp3");
+    this.audioHandler.loadSound("tentacles", "assets/sounds/tentacles.mp3");
+    this.audioHandler.loadSound("rhinocrack", "assets/sounds/rhinocrack.wav");
+    this.audioHandler.loadSound("phantom", "assets/sounds/phantom.mp3");
+    this.audioHandler.loadSound("locustslide", "assets/sounds/locustslide.mp3");
+    this.audioHandler.loadSound(
+      "lobsterburst",
+      "assets/sounds/lobsterburst.mp3"
+    );
+    this.audioHandler.loadSound("bossScream", "assets/sounds/bossScream.mp3");
+    this.audioHandler.loadSound("bossExplode", "assets/sounds/bossExplode.wav");
+    this.audioHandler.loadSound("eagleScream", "assets/sounds/eagleScream.mp3");
+    this.audioHandler.loadSound("eagle", "assets/sounds/eagle.mp3");
   }
   handleSpriteTimer(deltaTime) {
     if (this.spriteTimer < this.spriteInterval) {
