@@ -9,7 +9,6 @@ export default class Enemy {
     this.positionY = positionY;
     this.markedForDeletion = false;
     this.resize();
-    this.collisionDetected = false;
   }
   draw(context) {
     context.drawImage(
@@ -34,10 +33,9 @@ export default class Enemy {
         this.game.checkCollision(this, projectile) &&
         this.lives > 0
       ) {
-        this.collisionDetected = true;
         this.hit(1);
         projectile.reset();
-      } else this.collisionDetected = false; // state design pattern
+      }
     });
     if (this.lives < 1) {
       if (this.game.spriteUpdate) this.frameX++;
@@ -62,5 +60,13 @@ export default class Enemy {
   resize() {
     this.width = this.game.enemySize * this.game.ratio;
     this.height = this.game.enemySize * this.game.ratio;
+  }
+  toggleSwitch(state, deltaTime) {
+    if (this.switchTimer < this.switchInterval) {
+      this.switchTimer += deltaTime;
+    } else {
+      this.switchTimer = 0;
+      this.setState(state);
+    }
   }
 }

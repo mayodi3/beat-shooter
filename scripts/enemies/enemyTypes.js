@@ -10,6 +10,12 @@ export class Beetle extends Enemy {
     this.lives = 1;
     this.maxLives = this.lives;
   }
+  update(x, y) {
+    super.update(x, y);
+    this.game.waves.forEach((wave) => {
+      wave.speedY += Math.cos((wave.angle += 0.01));
+    });
+  }
 }
 
 export class RhinoCrack extends Enemy {
@@ -19,12 +25,18 @@ export class RhinoCrack extends Enemy {
     this.frameX = 0;
     this.maxFrame = 5;
     this.frameY = Math.floor(Math.random() * 4);
-    this.lives = 4;
+    this.lives = 1;
     this.maxLives = this.lives;
   }
   hit(damage) {
     this.lives -= damage;
     this.frameX = this.maxLives - Math.floor(this.lives);
+  }
+  update(x, y) {
+    super.update(x, y);
+    this.game.waves.forEach((wave) => {
+      wave.speedX += Math.sin(0.01);
+    });
   }
 }
 
@@ -35,12 +47,18 @@ export class LobsterBurst extends Enemy {
     this.frameX = 0;
     this.maxFrame = 14;
     this.frameY = Math.floor(Math.random() * 4);
-    this.lives = 4;
+    this.lives = 1;
     this.maxLives = this.lives;
   }
   hit(damage) {
     this.lives -= damage;
     this.frameX = this.maxLives - Math.floor(this.lives);
+  }
+  update(x, y) {
+    super.update(x, y);
+    this.game.waves.forEach((wave) => {
+      wave.speedX += Math.sin(-0.01);
+    });
   }
 }
 
@@ -49,16 +67,74 @@ export class Locust extends Enemy {
     super(game, positionX, positionY);
     this.image = document.getElementById("locust");
     this.frameX = 0;
-    this.maxFrame = 15;
-    this.frameY = Math.floor(Math.random() * 4);
+    this.maxFrame = 38;
+    this.frameY = 0;
     this.lives = 5;
     this.maxLives = this.lives;
-    this.width = 78.53;
+    this.game.enemySize = 90;
+    this.states = [
+      new LocustFlyingState(this),
+      new LocustSpeedState(this),
+      new LocustFireState(this),
+    ];
+    this.currentState = this.states[0];
+    this.currentState.startState();
+
+    this.switchTimer = 0;
+    this.switchInterval = 3000;
   }
   hit(damage) {
     this.lives -= damage;
     this.frameX = this.maxLives - Math.floor(this.lives);
   }
+  setState(state) {
+    this.currentState = this.states[state];
+    this.currentState.startState();
+  }
+  update(x, y, deltaTime) {
+    super.update(x, y, deltaTime);
+    this.currentState.updateState(deltaTime);
+    if (this.frameX < this.maxFrame) this.frameX++;
+    else this.frameX = 0;
+    if (this.lives < 1) {
+      this.markedForDeletion = true;
+      if (!this.game.gameOver) this.game.score += this.maxLives;
+    }
+  }
+}
+class LocustFlyingState {
+  constructor(locust) {
+    this.locust = locust;
+  }
+  startState() {
+    this.locust.frameY = 0;
+  }
+  updateState(deltaTime) {
+    this.locust.toggleSwitch(1, deltaTime);
+  }
+}
+class LocustSpeedState {
+  constructor(locust) {
+    this.locust = locust;
+  }
+  startState() {
+    this.locust.frameY = 1;
+    this.locust.game.waves.forEach((wave) => {
+      wave.speedX *= 1.2;
+    });
+  }
+  updateState(deltaTime) {
+    this.locust.toggleSwitch(0, deltaTime);
+  }
+}
+class LocustFireState {
+  constructor(locust) {
+    this.locust = locust;
+  }
+  startState() {
+    this.locust.frameY = 2;
+  }
+  updateState(deltaTime) {}
 }
 
 export class SquidWard extends Enemy {
@@ -70,10 +146,58 @@ export class SquidWard extends Enemy {
     this.frameY = Math.floor(Math.random() * 4);
     this.lives = 3;
     this.maxLives = this.lives;
+    this.states = [new TentacleState(this), new SquidExplodeState(this)];
+    this.currentState = this.states[0];
+    this.currentState.startState();
+  }
+  setState(state) {
+    this.currentState = this.states[state];
+    this.currentState.startState();
   }
   hit(damage) {
     this.lives -= damage;
     this.frameX = this.maxLives - Math.floor(this.lives);
+  }
+  update(x, y, deltaTime) {
+    super.update(x, y, deltaTime);
+    this.currentState.updateState();
+    this.game.waves.forEach((wave) => {
+      wave.speedY += Math.sin(wave.angle * 20);
+      wave.speedX += Math.sin(wave.angle * 20);
+    });
+  }
+}
+class TentacleState {
+  constructor(squid) {
+    this.squid = squid;
+  }
+  startState() {
+    this.squid.frameX = 0;
+    this.squid.maxFrame = 7;
+  }
+  updateState() {
+    if (this.squid.game.spriteUpdate) {
+      if (this.squid.frameX < this.squid.maxFrame) this.squid.frameX++;
+      else this.squid.frameX = 0;
+    }
+    if (this.squid.lives < 1) this.squid.setState(1);
+  }
+}
+class SquidExplodeState {
+  constructor(squid) {
+    this.squid = squid;
+  }
+  startState() {
+    this.squid.frameX = 9;
+    this.squid.maxFrame = 17;
+  }
+  updateState() {
+    if (this.squid.game.spriteUpdate) this.squid.frameX++;
+    if (this.squid.frameX > this.squid.maxFrame) {
+      this.squid.markedForDeletion = true;
+      if (!this.squid.game.gameOver)
+        this.squid.game.score += this.squid.maxLives;
+    }
   }
 }
 
@@ -137,7 +261,6 @@ export class Phantom extends Enemy {
     this.lives -= damage;
   }
 }
-
 class FlyingState {
   constructor(phantom) {
     this.phantom = phantom;
@@ -154,12 +277,7 @@ class FlyingState {
       else this.phantom.frameX = 0;
     }
     if (this.phantom.lives < 1) this.phantom.setState(2);
-    if (this.phantom.switchTimer < this.phantom.switchInterval) {
-      this.phantom.switchTimer += deltaTime;
-    } else {
-      this.phantom.switchTimer = 0;
-      this.phantom.setState(1);
-    }
+    this.phantom.toggleSwitch(1, deltaTime);
   }
 }
 class PhasingState {
@@ -178,13 +296,7 @@ class PhasingState {
         this.phantom.frameX++;
       else this.phantom.frameX = 3;
     }
-    // Switch functionality
-    if (this.phantom.switchTimer < this.phantom.switchInterval) {
-      this.phantom.switchTimer += deltaTime;
-    } else {
-      this.phantom.switchTimer = 0;
-      this.phantom.setState(0);
-    }
+    this.phantom.toggleSwitch(0, deltaTime);
   }
 }
 class ExplosionState {

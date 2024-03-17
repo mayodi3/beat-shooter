@@ -28,32 +28,34 @@ export default class Player {
   draw(context) {
     this.game.fired ? (this.frameX = 1) : (this.frameX = 0);
     // Gamepad pad
-    if (this.smallLaserButtonPressed || this.bigLaserButtonPressed) {
-      if (this.smallLaserButtonPressed) {
-        this.game.audioHandler.startLaser("smallaser");
-        this.smallLaser.render(context);
-        this.frameX = 2;
-      } else if (this.bigLaserButtonPressed) {
-        this.game.audioHandler.startLaser("biglaser");
-        this.bigLaser.render(context);
-        this.frameX = 3;
+    if (this.game.level !== 1) {
+      if (this.smallLaserButtonPressed || this.bigLaserButtonPressed) {
+        if (this.smallLaserButtonPressed) {
+          this.game.audioHandler.startLaser("smallaser");
+          this.smallLaser.render(context);
+          this.frameX = 2;
+        } else if (this.bigLaserButtonPressed) {
+          this.game.audioHandler.startLaser("biglaser");
+          this.bigLaser.render(context);
+          this.frameX = 3;
+        } else {
+          this.game.audioHandler.stopLaser();
+        }
       } else {
-        this.game.audioHandler.stopLaser();
-      }
-    } else {
-      // handle sprite frames by keyboard controls
-      // if (this.game.input.keys.indexOf("1") > -1) {
-      //   this.frameX = 1;
-      // }
-      if (this.game.input.keys.indexOf("2") > -1) {
-        this.game.audioHandler.startLaser("smallaser");
-        this.smallLaser.render(context);
-      } else if (this.game.input.keys.indexOf("3") > -1) {
-        this.game.audioHandler.startLaser("biglaser");
-        this.bigLaser.render(context);
-      } else {
-        // this.frameX = 0;
-        this.game.audioHandler.stopLaser();
+        // handle sprite frames by keyboard controls
+        // if (this.game.input.keys.indexOf("1") > -1) {
+        //   this.frameX = 1;
+        // }
+        if (this.game.input.keys.indexOf("2") > -1) {
+          this.game.audioHandler.startLaser("smallaser");
+          this.smallLaser.render(context);
+        } else if (this.game.input.keys.indexOf("3") > -1) {
+          this.game.audioHandler.startLaser("biglaser");
+          this.bigLaser.render(context);
+        } else {
+          // this.frameX = 0;
+          this.game.audioHandler.stopLaser();
+        }
       }
     }
 
@@ -80,10 +82,10 @@ export default class Player {
       this.height
     );
     // Player energyBar
-    this.cooldown ? (context.fillStyle = "red") : (context.fillStyle = "green");
+    this.cooldown ? (context.fillStyle = "red") : (context.fillStyle = "blue");
     for (let i = 0; i < this.energy; i++) {
       context.fillRect(
-        this.x + this.width * 0.5 - 2.5,
+        this.x + this.width * 0.5 - 2,
         this.y + this.height * 0.5 + this.energyWidth * i,
         5,
         this.energyWidth

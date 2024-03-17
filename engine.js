@@ -1,6 +1,7 @@
 import Game from "./scripts/game.js";
 
 window.addEventListener("load", function () {
+  this.document.getElementById("loading").style.display = "none";
   // Canvas setup
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");

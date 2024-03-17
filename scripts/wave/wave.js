@@ -19,6 +19,7 @@ export default class Wave {
     this.angle = 0;
 
     this.resize();
+    // this.create(level);
     this.create(level);
 
     this.width;
@@ -27,7 +28,7 @@ export default class Wave {
     this.y;
   }
   render(context, deltaTime) {
-    const data = Math.floor(this.game.data.getData());
+    // const data = Math.floor(this.game.data.getData());
     if (this.y < 0) this.y += 5;
     this.speedY = 0;
     if (this.x < 0 || this.x > this.game.width - this.width) {
@@ -35,10 +36,12 @@ export default class Wave {
       this.speedY = this.game.enemySize;
     }
     this.angle += 0.2;
-    if (data && data !== Infinity) {
-      console.log(data);
-      this.speedY += Math.cos(data);
-    } else this.speedY += Math.cos(this.angle);
+    // if (data && data !== Infinity) {
+    //   console.log(data);
+    //   this.speedY += Math.cos(data);
+    // } else this.speedY += Math.cos(this.angle);
+
+    this.speedY += Math.cos(this.angle);
 
     this.x += this.speedX;
     this.y += this.speedY;
