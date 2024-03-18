@@ -18,10 +18,6 @@ window.addEventListener("load", function () {
   const game = new Game(ctx, canvas);
   const levelButtons = document.querySelector(".level-buttons");
   let gamePaused = false;
-  const leftButton = this.document.getElementById("leftButton");
-  const rightButton = this.document.getElementById("rightButton");
-  leftButton.width *= game.ratio;
-  rightButton.width *= game.ratio;
   const controls = document.querySelector(".controls");
 
   // const audio = document.getElementById("audio");
@@ -75,6 +71,7 @@ window.addEventListener("load", function () {
       audioCounter.play();
       setTimeout(() => {
         // PAGE 4
+        game.gameStarted = true;
         counter.style.display = "none";
         canvas.style.display = "block";
         controls.style.display = "block";
@@ -97,6 +94,7 @@ window.addEventListener("load", function () {
     click.play();
     document.getElementById("pause").style.display = "none";
     menubuttons.style.display = "block";
+    exitMain.style.display = "block";
     document.getElementById("playbutton").style.display = "block";
     gamePaused = true;
     if (!gamePaused) requestAnimationFrame(animate);
@@ -105,6 +103,7 @@ window.addEventListener("load", function () {
     click.play();
     document.getElementById("playbutton").style.display = "none";
     menubuttons.style.display = "none";
+    exitMain.style.display = "none";
     document.getElementById("pause").style.display = "block";
     gamePaused = false;
     if (!gamePaused) requestAnimationFrame(animate);
@@ -121,6 +120,16 @@ window.addEventListener("load", function () {
     window.location.reload();
   }
   menubuttons.addEventListener("click", refreshPage);
+  exitMain.addEventListener("click", () => {
+    window.location.href = "notification.html";
+    this.window.open("", "_self", "");
+    this.window.close();
+  });
+  exitLevel.addEventListener("click", () => {
+    window.location.href = "notification.html";
+    this.window.open("", "_self", "");
+    this.window.close();
+  });
 
   // Animation Loop
   let lastTime = 0;

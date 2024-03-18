@@ -19,7 +19,6 @@ body {
 /* Loading page */
 #loading {
   width: 100%;
-  height: 100%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -86,41 +85,22 @@ body {
 }
 
 /* Container positioning */
-#container,
+/* #container, */
 #buttonsContainer {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
   z-index: 2;
 }
 /* Control hover effect */
-#controls {
-  padding: 10px;
-}
 #controls:hover {
-  transform: scale(1.5);
+  transform: scale(1.2);
 }
 
 /* Button positioning */
-#rightButton,
-#leftButton {
-  position: absolute;
-  bottom: 10px;
-  border: 3px solid rgb(103, 184, 241);
-  border-radius: 8px;
-  width: 70px;
-}
-#rightButton:hover,
-#leftButton:hover {
-  background-color: #0395a5;
-}
-#rightButton {
-  right: 10px;
-}
-#leftButton {
-  left: 10px;
-}
 #pause {
   position: absolute;
   right: 10px;
@@ -134,20 +114,41 @@ body {
 }
 #menubuttons {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: none;
   color: white;
   background: transparent;
-  border: 3px solid rgb(103, 184, 241);
+  border: 10px solid rgb(103, 184, 241);
   border-radius: 10vw;
-  width: 20vw;
-  height: 5vh;
+  width: 50vw;
+  height: 10vh;
   font-family: "Bangers";
   font-size: larger;
 }
 #menubuttons:hover {
+  background: rgb(103, 184, 241);
+}
+#exitMain {
+  display: none;
+}
+#exitMain {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  color: white;
+  background: transparent;
+  border: 10px solid rgb(103, 184, 241);
+  border-radius: 10vw;
+  width: 50vw;
+  height: 10vh;
+  font-family: "Bangers";
+  font-size: larger;
+}
+#exitMain:hover {
   background: rgb(103, 184, 241);
 }
 
@@ -157,11 +158,11 @@ body {
   position: absolute;
   font-size: 30px;
   border-radius: 50%;
-  bottom: 100px;
+  bottom: 20px;
   background: transparent;
   border: 3px solid rgb(103, 184, 241);
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
 }
 #smallaserBtn:hover,
 #biglaserBtn:hover,

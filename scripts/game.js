@@ -15,6 +15,8 @@ export default class Game {
     this.width = this.canvas.width;
     this.height = this.canvas.height;
 
+    this.gameStarted = false;
+
     this.audioHandler = new AudioHandler();
     this.input = new InputHandler(this);
     this.player = new Player(this);
@@ -62,6 +64,7 @@ export default class Game {
     window.addEventListener("resize", (e) => {
       this.resize(e.currentTarget.innerWidth, e.currentTarget.innerHeight);
     });
+    if (this.width < 600) this.toggleFullScreen();
   }
   resize(width, height) {
     this.restart();

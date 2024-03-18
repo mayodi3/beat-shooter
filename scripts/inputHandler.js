@@ -5,26 +5,8 @@ export default class InputHandler {
     this.connectionMessage = "";
     this.controllerIndex = null;
     this.shot = false;
-    const leftButton = document.getElementById("leftButton");
-    const rightButton = document.getElementById("rightButton");
     const biglaserBtn = document.getElementById("biglaserBtn");
     const smallaserBtn = document.getElementById("smallaserBtn");
-
-    // Button movement controls
-    leftButton.addEventListener("touchstart", () => {
-      this.keys.push("ArrowLeft");
-    });
-    leftButton.addEventListener("touchend", () => {
-      const index = this.keys.indexOf("ArrowLeft");
-      if (index > -1) this.keys.splice(index, 1);
-    });
-    rightButton.addEventListener("touchstart", () => {
-      this.keys.push("ArrowRight");
-    });
-    rightButton.addEventListener("touchend", () => {
-      const index = this.keys.indexOf("ArrowRight");
-      if (index > -1) this.keys.splice(index, 1);
-    });
 
     // laser controls
     smallaserBtn.addEventListener("touchstart", () => {
@@ -45,17 +27,27 @@ export default class InputHandler {
     });
 
     // Player shooting touch controls
-    window.addEventListener("touchstart", () => {
+    window.addEventListener("touchstart", (e) => {
       if (!this.game.fired) {
         this.game.player.frameX = 1;
-        this.game.audioHandler.playSound("shoot", 3);
+        this.game.gameStarted && this.game.audioHandler.playSound("shoot", 3);
         this.game.fired = true;
-        this.game.player.shoot();
+        this.game.gameStarted && this.game.player.shoot();
       }
+      if (
+        e.targetTouches[0].clientX >
+        this.game.player.x + this.game.player.width
+      )
+        this.keys.push("ArrowRight");
+      else this.keys.push("ArrowLeft");
     });
     window.addEventListener("touchend", () => {
       this.game.fired = false;
       this.game.player.frameX = 0;
+      if (this.keys.indexOf("ArrowRight") > -1)
+        this.keys.splice(this.keys.indexOf("ArrowRight"), 1);
+      if (this.keys.indexOf("ArrowLeft") > -1)
+        this.keys.splice(this.keys.indexOf("ArrowLeft"), 1);
     });
 
     // Keyboard controls
