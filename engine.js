@@ -29,6 +29,7 @@ window.addEventListener("load", function () {
   function handlePage1() {
     const firstPage = document.getElementById("firstPage");
     play.addEventListener("click", () => {
+      click.play();
       firstPage.style.display = "none";
       document.getElementById("largeContainer").style.display = "block";
     });
@@ -36,6 +37,7 @@ window.addEventListener("load", function () {
   function handlePage2() {
     const levelButton = document.getElementById("levelButton");
     levelButton.addEventListener("click", () => {
+      click.play();
       levelButtons.style.display = "grid";
       document.getElementById("largeContainer").style.display = "none";
       document.getElementById("gameLogo").style.display = "none";
@@ -64,6 +66,7 @@ window.addEventListener("load", function () {
     audio.play();
     audio.loop = true;
     function startGame(level) {
+      click.play();
       levelButtons.style.display = "none";
       canvas.style.display = "none";
       controls.style.display = "none";
@@ -82,6 +85,7 @@ window.addEventListener("load", function () {
       }, 5000);
       window.addEventListener("keydown", (e) => {
         if (e.key === "p") {
+          click.play();
           gamePaused = !gamePaused;
           if (!gamePaused) requestAnimationFrame(animate);
         }
@@ -90,6 +94,7 @@ window.addEventListener("load", function () {
   }
 
   document.getElementById("pause").addEventListener("click", () => {
+    click.play();
     document.getElementById("pause").style.display = "none";
     menubuttons.style.display = "block";
     document.getElementById("playbutton").style.display = "block";
@@ -97,6 +102,7 @@ window.addEventListener("load", function () {
     if (!gamePaused) requestAnimationFrame(animate);
   });
   document.getElementById("playbutton").addEventListener("click", () => {
+    click.play();
     document.getElementById("playbutton").style.display = "none";
     menubuttons.style.display = "none";
     document.getElementById("pause").style.display = "block";
