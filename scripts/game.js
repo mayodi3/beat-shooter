@@ -55,6 +55,7 @@ export default class Game {
 
     this.newGame = document.getElementById("newGame");
     this.loseSound = document.getElementById("lose");
+    this.win = document.getElementById("win");
 
     if (this.width > 504) {
       this.ratio = (this.width / this.height) * 0.5;

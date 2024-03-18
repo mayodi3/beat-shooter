@@ -6,6 +6,10 @@ export default class UI {
     this.lifeWidth;
     this.lifeHeight;
     this.resize();
+    this.image = document.getElementById("gameOver");
+    this.width;
+    this.height;
+    this.played = false;
   }
   drawStatusText(context) {
     context.save();
@@ -39,18 +43,23 @@ export default class UI {
     if (this.game.gameOver) {
       context.textAlign = "center";
       context.font = 80 + "px Bangers";
-      context.fillText(
-        "GAME OVER!",
-        this.game.width * 0.5,
-        this.game.height * 0.5,
-        this.game.width
-      );
-      context.font = 40 + "px Bangers";
-      context.fillText(
-        "Press R to restart!",
-        this.game.width * 0.5,
-        this.game.height * 0.5 + 30,
-        this.game.width
+      if (this.game.score > 100 && this.game.gameOver) {
+        if (!this.played) {
+          this.played = true;
+          this.game.win.play();
+        }
+      } else if (this.game.gameOver) {
+        if (!this.played) {
+          this.played = true;
+          this.game.loseSound.play();
+        }
+      }
+      context.drawImage(
+        this.image,
+        this.game.width * 0.5 - this.width * 0.5,
+        this.game.height * 0.5 - this.height * 0.5,
+        this.width,
+        this.height
       );
     }
     context.restore();
@@ -61,5 +70,7 @@ export default class UI {
     this.game.context.fillStyle = "white";
     this.lifeWidth = 10 * this.game.ratio;
     this.lifeHeight = 15 * this.game.ratio;
+    this.width = 441 * this.game.ratio;
+    this.height = 294 * this.game.ratio;
   }
 }

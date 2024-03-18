@@ -72,6 +72,7 @@ window.addEventListener("load", function () {
       setTimeout(() => {
         // PAGE 4
         game.gameStarted = true;
+        game.newGame.play();
         counter.style.display = "none";
         canvas.style.display = "block";
         controls.style.display = "block";

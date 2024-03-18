@@ -38,7 +38,6 @@ export default class EagleShootProjectile {
         this.reset();
         this.game.player.lives--;
         if (this.game.player.lives < 1) {
-          this.game.loseSound.play();
           this.game.gameOver;
         }
       }
