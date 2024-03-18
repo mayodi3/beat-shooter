@@ -87,10 +87,11 @@ export default class Boss {
     }
     // boss destroyed
     if (this.lives < 1 && this.game.spriteUpdate) {
-      this.game.audioHandler.playSound("bossExplode");
       this.frameX++;
       if (this.frameX > this.maxFrame) {
         this.markedForDeletion = true;
+        if (this.markedForDeletion)
+          this.game.audioHandler.playSound("bossExplode");
         this.game.score += this.maxLives;
         this.game.bossLives += 5;
         if (!this.game.gameOver) this.game.newWave(this.game.level);

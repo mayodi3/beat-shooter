@@ -60,13 +60,15 @@ window.addEventListener("load", function () {
 
     const counter = document.getElementById("counter");
     const audioCounter = document.getElementById("audioCounter");
-    const menuMusic = document.getElementById("menuMusic");
+    const audio = new Audio("assets/sounds/background.mp3");
+    audio.play();
+    audio.loop = true;
     function startGame(level) {
       levelButtons.style.display = "none";
       canvas.style.display = "none";
       controls.style.display = "none";
       counter.style.display = "block";
-      menuMusic.pause();
+      audio.pause();
       audioCounter.play();
       setTimeout(() => {
         // PAGE 4
@@ -108,6 +110,11 @@ window.addEventListener("load", function () {
   handlePage2();
   // PAGE 3
   handlePage3();
+
+  function refreshPage() {
+    window.location.reload();
+  }
+  menubuttons.addEventListener("click", refreshPage);
 
   // Animation Loop
   let lastTime = 0;

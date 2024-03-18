@@ -104,7 +104,7 @@ export default class Game {
       "assets/sounds/lobsterburst.mp3"
     );
     this.audioHandler.loadSound("bossScream", "assets/sounds/bossScream.mp3");
-    this.audioHandler.loadSound("bossExplode", "assets/sounds/bossExplode.wav");
+    this.audioHandler.loadSound("bossExplode", "assets/sounds/bossExplode.mp3");
     this.audioHandler.loadSound("eagleScream", "assets/sounds/eagleScream.mp3");
     this.audioHandler.loadSound("eagle", "assets/sounds/eagle.mp3");
   }
