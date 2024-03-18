@@ -73,7 +73,7 @@ export default class Boss {
       ) {
         this.hit(1);
         projectile.reset();
-        if (this.lives % 10 === 0) {
+        if (this.lives % 10 === 0 && this.lives > 1) {
           this.game.audioHandler.playSound("bossScream");
           this.speedX *= 2;
         }

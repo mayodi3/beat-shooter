@@ -121,6 +121,35 @@ body {
 #leftButton {
   left: 10px;
 }
+#pause {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+#playbutton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: none;
+}
+#menubuttons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  color: white;
+  background: transparent;
+  border: 3px solid rgb(103, 184, 241);
+  border-radius: 10vw;
+  width: 20vw;
+  height: 5vh;
+  font-family: "Bangers";
+  font-size: larger;
+}
+#menubuttons:hover {
+  background: rgb(103, 184, 241);
+}
 
 #smallaserBtn,
 #biglaserBtn {

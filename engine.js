@@ -87,6 +87,21 @@ window.addEventListener("load", function () {
     }
   }
 
+  document.getElementById("pause").addEventListener("click", () => {
+    document.getElementById("pause").style.display = "none";
+    menubuttons.style.display = "block";
+    document.getElementById("playbutton").style.display = "block";
+    gamePaused = true;
+    if (!gamePaused) requestAnimationFrame(animate);
+  });
+  document.getElementById("playbutton").addEventListener("click", () => {
+    document.getElementById("playbutton").style.display = "none";
+    menubuttons.style.display = "none";
+    document.getElementById("pause").style.display = "block";
+    gamePaused = false;
+    if (!gamePaused) requestAnimationFrame(animate);
+  });
+
   // PAGE 1
   handlePage1();
   // PAGE 2

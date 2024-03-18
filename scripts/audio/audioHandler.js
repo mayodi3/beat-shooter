@@ -1,11 +1,15 @@
 export default class AudioHandler {
   constructor() {
-    this.audioContext = new (window.AudioContext ||
-      window.webkitAudioContext)();
+    this.audioContext;
     this.sounds = {};
     this.laserSoundNode = null;
-
-    this.beetle = document.getElementById("beetle-sound");
+    if (!this.audioContext) {
+      this.audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
+    }
+    if (this.audioContext.state === "suspended") {
+      this.audioContext.resume();
+    }
   }
 
   async loadSound(key, src) {
