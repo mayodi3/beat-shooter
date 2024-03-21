@@ -85,7 +85,6 @@ body {
 }
 
 /* Container positioning */
-/* #container, */
 #buttonsContainer {
   position: absolute;
   top: 50%;
@@ -152,8 +151,7 @@ body {
   background: rgb(103, 184, 241);
 }
 
-#smallaserBtn,
-#biglaserBtn {
+.laser {
   color: rgb(103, 184, 241);
   position: absolute;
   font-size: 30px;
@@ -164,10 +162,7 @@ body {
   width: 70px;
   height: 70px;
 }
-#smallaserBtn:hover,
-#biglaserBtn:hover,
-#smallaserBtn:active,
-#biglaserBtn:active {
+.laser .laser-active-hover {
   color: black;
   background-color: aqua;
 }
@@ -196,39 +191,11 @@ body {
   top: 80px;
 }
 
-#level1Button:hover,
-#level2Button:hover,
-#level3Button:hover,
-#level4Button:hover,
-#level5Button:hover,
-#level6Button:hover,
-#level7Button:hover {
+.level-buttons div:hover {
   transform: scale(0.8);
 }
 
-/* Audio positiong */
-#audio {
-  display: none;
-}
-/* #fileUpload {
-  position: absolute;
-  right: -50px;
-}
-#audio1 {
-  position: absolute;
-  width: 200px;
-  height: 20px;
-  z-index: 2;
-} */
-
-/* Hidden elements */
-.hidden,
-.assets,
-.controls,
-.level-buttons,
-#largeContainer,
-#counter,
-#audioCounter {
+.hide {
   display: none;
 }
 #counter {

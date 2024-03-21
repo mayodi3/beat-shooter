@@ -17,28 +17,21 @@
     </div>
 
     <!-- Second page -->
-    <div id="largeContainer">
+    <div id="largeContainer" class="hide">
       <img src="assets/UI/arrowDown.gif"  id="arrowDown2">
       <img src="assets/backgrounds/MenuBg.png" id="MenuBg" />
 
       <div id="buttonsContainer">
-        <!-- <div id="controls">
-          <img src="assets/UI/optionsButton.png" id="optionsButton" />
-        </div> -->
         <div id="controls">
           <img src="assets/UI/levelButton.png" id="levelButton" />
         </div>
         <div id="controls">
           <img src="assets/UI/exit.png"  id="exitLevel">
         </div>
-        <!-- <div id="controls">
-          <img src="assets/UI/shopButton.png" id="shopButton" />
-        </div> -->
       </div>
     </div>
-
     <!-- Third Page -->
-    <div class="level-buttons">
+    <div class="level-buttons hide">
       <div><p id="paragraph">1</p><img src="assets/UI/level1.png" id="level1Button"></img></div>
       <div><p id="paragraph">2</p><img src="assets/UI/level1.png" id="level2Button"></img></div>
       <div><p id="paragraph">3</p><img src="assets/UI/level1.png" id="level3Button"></img></div>
@@ -49,21 +42,21 @@
     </div>
 
      <!-- Audio Data Setup -->
-     <div id="audio">
+     <div id="audio" class="hide">
       <input type="file" id="fileUpload" />
       <audio id="audio1" controls autoplay></audio>
     </div>
 
     <!-- Counter Page -->
-    <img src="assets/UI/counter.gif" id="counter">
-    <audio src="assets/sounds/counter.mp3" id="audioCounter"></audio>
+    <img src="assets/UI/counter.gif" id="counter" class="hide">
+    <audio src="assets/sounds/counter.mp3" id="audioCounter" class="hide"></audio>
 
 
     <!-- Fourth Page -->
     <canvas id="canvas1"></canvas>
-    <div class="controls">
-      <button id="smallaserBtn">S</button>
-      <button id="biglaserBtn">B</button>
+    <div class="controls hide">
+      <button id="smallaserBtn" class="laser laser-active-hover">S</button>
+      <button id="biglaserBtn" class="laser laser-active-hover">B</button>
       <img src="assets/UI/pause.png" id="pause">
       <img src="assets/UI/playbutton.png" id="playbutton">
       <button id="menubuttons">MAIN</button>
@@ -73,7 +66,7 @@
   
 
     <!-- Invisible ones -->
-    <div class="assets">
+    <div class="assets hide">
       <!-- Enemies -->
       <img src="assets/enemies/beetle.png" id="beetle" />
       <img src="assets/enemies/rhinocrack.png" id="rhinocrack" />
