@@ -5,8 +5,6 @@ export default class InputHandler {
     this.connectionMessage = "";
     this.controllerIndex = null;
     this.shot = false;
-    const biglaserBtn = document.getElementById("biglaserBtn");
-    const smallaserBtn = document.getElementById("smallaserBtn");
 
     // laser controls
     smallaserBtn.addEventListener("touchstart", () => {
@@ -34,12 +32,10 @@ export default class InputHandler {
         this.game.fired = true;
         this.game.gameStarted && this.game.player.shoot();
       }
-      if (
-        e.targetTouches[0].clientX >
-        this.game.player.x + this.game.player.width
-      )
+      if (e.targetTouches[0].clientX > this.game.width * 0.8)
         this.keys.push("ArrowRight");
-      else this.keys.push("ArrowLeft");
+      else if (e.targetTouches[0].clientX < this.game.width * 0.2)
+        this.keys.push("ArrowLeft");
     });
     window.addEventListener("touchend", () => {
       this.game.fired = false;
@@ -126,17 +122,11 @@ export default class InputHandler {
         this.game.fired = false;
       }
 
-      if (smallLaserPressed) {
-        this.game.player.smallLaserButtonPressed = true;
-      } else {
-        this.game.player.smallLaserButtonPressed = false;
-      }
+      if (smallLaserPressed) this.game.player.smallLaserButtonPressed = true;
+      else this.game.player.smallLaserButtonPressed = false;
 
-      if (bigLaserPressed) {
-        this.game.player.bigLaserButtonPressed = true;
-      } else {
-        this.game.player.bigLaserButtonPressed = false;
-      }
+      if (bigLaserPressed) this.game.player.bigLaserButtonPressed = true;
+      else this.game.player.bigLaserButtonPressed = false;
     }
   }
 }

@@ -1,7 +1,6 @@
 export default class Explosion {
   constructor(game, x, y) {
     this.game = game;
-    this.image = document.getElementById("explosions");
     this.x = x;
     this.y = y;
     this.spriteWidth = 89.476;
@@ -22,7 +21,7 @@ export default class Explosion {
   draw() {
     if (!this.markedForDeletion) {
       this.game.context.drawImage(
-        this.image,
+        explosions,
         this.frameX * this.spriteWidth,
         this.frameY * this.spriteHeight,
         this.spriteWidth,
