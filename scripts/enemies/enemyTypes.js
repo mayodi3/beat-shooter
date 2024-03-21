@@ -77,7 +77,7 @@ export class Locust extends Enemy {
     this.maxLives = this.lives;
     this.game.enemySize = 90;
     this.states = [
-      new LocustFlyingState(this),
+      new LocustStaticState(this),
       new LocustSpeedState(this),
       new LocustFireState(this),
     ];
@@ -107,7 +107,7 @@ export class Locust extends Enemy {
     if (this.markedForDeletion) this.game.audioHandler.playSound("locust");
   }
 }
-class LocustFlyingState {
+class LocustStaticState {
   constructor(locust) {
     this.locust = locust;
   }
@@ -251,12 +251,11 @@ export class Phantom extends Enemy {
     this.maxFlyingFrame;
     this.maxPhasingFrame;
     this.states = [
+      new StaticState(this),
       new FlyingState(this),
-      new PhasingState(this),
       new ExplosionState(this),
     ];
-    this.currentState = this.states[0];
-    this.currentState.startState();
+    this.currentState = this.states[1];
 
     this.switchTimer = 0;
     this.switchInterval = Math.random() * 2000 + 1000;
@@ -272,6 +271,25 @@ export class Phantom extends Enemy {
   }
   hit(damage) {
     this.lives -= damage;
+  }
+}
+class StaticState {
+  constructor(phantom) {
+    this.phantom = phantom;
+    this.speedAttack = false;
+  }
+  startState() {
+    this.phantom.frameX = 3;
+    this.phantom.maxPhasingFrame = 5;
+  }
+  updateState(deltaTime) {
+    // Frames handled
+    if (this.phantom.game.spriteUpdate) {
+      if (this.phantom.frameX < this.phantom.maxPhasingFrame)
+        this.phantom.frameX++;
+      else this.phantom.frameX = 3;
+    }
+    this.phantom.toggleSwitch(1, deltaTime);
   }
 }
 class FlyingState {
@@ -290,25 +308,6 @@ class FlyingState {
       else this.phantom.frameX = 0;
     }
     if (this.phantom.lives < 1) this.phantom.setState(2);
-    this.phantom.toggleSwitch(1, deltaTime);
-  }
-}
-class PhasingState {
-  constructor(phantom) {
-    this.phantom = phantom;
-    this.speedAttack = false;
-  }
-  startState() {
-    this.phantom.frameX = 3;
-    this.phantom.maxPhasingFrame = 5;
-  }
-  updateState(deltaTime) {
-    // Frames handled
-    if (this.phantom.game.spriteUpdate) {
-      if (this.phantom.frameX < this.phantom.maxPhasingFrame)
-        this.phantom.frameX++;
-      else this.phantom.frameX = 3;
-    }
     this.phantom.toggleSwitch(0, deltaTime);
   }
 }
