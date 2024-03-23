@@ -116,3 +116,25 @@ export default class BEAT {
 //   //   }
 //   // });
 // });
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   const fileInput = document.getElementById("fileInput");
+//   let sound;
+//   let audioContext;
+
+//   fileInput.addEventListener("change", async (event) => {
+//     if (audioContext) {
+//       audioContext.close();
+//     }
+//     audioContext = new AudioContext();
+//     const file = event.target.files[0];
+//     const url = URL.createObjectURL(file);
+
+//     if (sound) {
+//       sound.stop();
+//     }
+//     sound = new BEAT(audioContext, url);
+//     await sound.load();
+//     sound.play((data) => console.log("Execute : ", data));
+//   });
+// });
