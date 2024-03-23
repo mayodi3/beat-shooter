@@ -1,69 +1,118 @@
-export default class AudioData {
-  constructor() {
-    this.audio1 = document.getElementById("audio1");
-    this.audio1.volume = 0.9;
-    this.audioContext = null;
-    this.analyzer = null;
-    this.bufferLength = 0;
-    this.dataArray = null;
+export default class BEAT {
+  constructor(
+    context,
+    name,
+    filterFrequency = 80, // 100
+    peakGain = 10, // 15
+    threshold = 0.5, // 0.8
+    sampleSkip = 300, // 350
+    minAnimationTime = 0.3 // 0.4
+  ) {
+    this.isPlaying = false;
+    this.context = context;
+    this.name = name;
+    this.filterFrequency = filterFrequency;
+    this.peakGain = peakGain;
+    this.threshold = threshold;
+    this.sampleSkip = sampleSkip;
+    this.minAnimationTime = minAnimationTime;
+    this.songData = [];
+  }
 
-    const file = document.getElementById("fileUpload");
-    file.addEventListener("change", () => {
-      const files = file.files;
-      this.audio1.src = URL.createObjectURL(files[0]);
-      this.audio1.load();
-      this.audio1.play();
-      this.initAudioContext();
+  load() {
+    return new Promise((resolve) => {
+      fetch(this.name)
+        .then((resp) => resp.arrayBuffer())
+        .then((file) => {
+          this.context.decodeAudioData(file, (buffer) => {
+            this.buffer = buffer;
+            this.analyze().then(() => resolve());
+          });
+        });
     });
   }
 
-  initAudioContext() {
-    try {
-      this.audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
-      this.analyzer = this.audioContext.createAnalyser();
-      this.audioSource = this.audioContext.createMediaElementSource(
-        this.audio1
-      );
-      this.audioSource.connect(this.analyzer);
-      this.analyzer.connect(this.audioContext.destination);
-      this.analyzer.fftSize = 1024;
-      this.bufferLength = this.analyzer.frequencyBinCount;
-
-      this.dataArray = new Float32Array(this.bufferLength);
-    } catch (error) {
-      console.error("Failed to initialize AudioContext:", error);
-    }
+  play(cb) {
+    this.isPlaying = true;
+    const source = this.context.createBufferSource();
+    source.buffer = this.buffer;
+    source.connect(this.context.destination);
+    // source.loop = true
+    source.start();
+    this.animate(cb);
   }
 
-  getData() {
-    if (!this.analyzer) {
-      return null;
-    }
-    this.analyzer.getFloatFrequencyData(this.dataArray);
-    for (let i = 0; i < this.bufferLength; i++) {
-      return Math.abs(this.dataArray[i]);
-    }
+  analyze() {
+    return new Promise((resolve) => {
+      this.offlineContext = new OfflineAudioContext(
+        1,
+        this.buffer.length,
+        this.buffer.sampleRate
+      );
+      const source = this.offlineContext.createBufferSource();
+      source.buffer = this.buffer;
+
+      const filter = this.offlineContext.createBiquadFilter();
+      filter.type = "bandpass";
+      filter.frequency.value = this.filterFrequency;
+      filter.Q.value = 1;
+
+      const filter2 = this.offlineContext.createBiquadFilter();
+      filter2.type = "peaking";
+      filter2.frequency.value = this.filterFrequency;
+      filter2.Q.value = 1;
+      filter2.gain.value = this.peakGain;
+
+      source.connect(filter2);
+      filter2.connect(filter);
+      filter.connect(this.offlineContext.destination);
+      source.start();
+      this.offlineContext.startRendering().then((buffer) => {
+        const data = buffer.getChannelData(0);
+
+        this.songData = [];
+        for (let i = 0; i < data.length; i += this.sampleSkip) {
+          if (data[i] > this.threshold) {
+            const time = i / buffer.sampleRate;
+            const previousTime = this.songData.length
+              ? this.songData[this.songData.length - 1].time
+              : 0;
+            if (time - previousTime > this.minAnimationTime) {
+              this.songData.push({
+                data: data[i],
+                time,
+              });
+            }
+          }
+        }
+        resolve();
+      });
+    });
+  }
+
+  animate(cb) {
+    this.songData.forEach((d, i) => {
+      const time =
+        i === this.songData.length - 1
+          ? d.time
+          : this.songData[i + 1].time - d.time;
+      setTimeout(() => cb(time), d.time * 1000);
+    });
   }
 }
 
-// Reference purposes
-// function animate() {
-//   let data = Math.abs(audio.getData());
-
-//   if (data) {
-//     if (data < 25) context.style = "red";
-//     else if (data < 30) context.style = "magenta";
-//     else if (data < 35) context.style = "green";
-//     else if (data < 40) context.style = "blue";
-//     else if (data < 45) context.style = "yellow";
-//     else if (data < 50) context.style = "greenYellow";
-//     else if (data < 55) context.style = "purple";
-//     else if (data < 60) context.style = "gold";
-//     else if (data < 65) context.style = "gray";
-//     else if (data < 70) context.style = "dodgeBlue";
-//     else context.style = "white";
-//   }
-
-//   requestAnimationFrame(animate);
-// }
+// document.addEventListener("DOMContentLoaded", () => {
+//   // let sound;
+//   // let audioContext = new AudioContext();
+//   const songUrl = "./testMusic/trap1.mp3";
+//   // sound = new BEAT(audioContext, songUrl);
+//   const sound = new BEAT(songUrl);
+//   sound.load().then(() => {
+//     sound.play((data) => console.log("Execute : ", data));
+//   });
+//   // document.getElementById('stopButton').addEventListener('click', () => {
+//   //   if (sound) {
+//   //     sound.stop();
+//   //   }
+//   // });
+// });
