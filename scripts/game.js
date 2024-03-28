@@ -7,6 +7,7 @@ import UI from "./ui.js";
 import AudioData from "./audio/audioData.js";
 import Boss from "./boss/boss.js";
 import AudioHandler from "./audio/audioHandler.js";
+import BEAT from "./audio/audioData.js";
 
 export default class Game {
   constructor(canvas, context) {
@@ -66,6 +67,26 @@ export default class Game {
       this.resize(e.currentTarget.innerWidth, e.currentTarget.innerHeight);
     });
     if (this.width < 600) this.toggleFullScreen();
+
+    // beat detection
+    this.beatDetected = false;
+
+    const musicPlay = document.getElementById("musicPlay");
+    function startAudio() {
+      const audioContext = new AudioContext();
+      const beat = new BEAT(audioContext, "./rhumba.mp3");
+      beat
+        .load()
+        .then(() => {
+          beat.play((data) => {
+            console.log("Detected : " + data);
+          });
+        })
+        .catch((error) => {
+          console.error("Error loading or decoding audio:", error);
+        });
+    }
+    musicPlay.addEventListener("click", startAudio);
   }
   resize(width, height) {
     this.restart();

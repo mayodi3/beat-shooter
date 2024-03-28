@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      body {
+        background: black;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module" defer>
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDMbXl3RV7eY7mI-EJrsaBoU3pUQbSl_5g",
+        authDomain: "bshoot-d82b3.firebaseapp.com",
+        projectId: "bshoot-d82b3",
+        storageBucket: "bshoot-d82b3.appspot.com",
+        messagingSenderId: "438934160281",
+        appId: "1:438934160281:web:b05997bd644243e59dc908",
+        measurementId: "G-MMJGVEMTJW",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+  </body>
+</html>

@@ -111,6 +111,17 @@ body {
   top: 10px;
   display: none;
 }
+#musicPlay {
+  position: absolute;
+  right: 5vw;
+  top: 10px;
+  width: 2vw;
+  height: 2vw;
+  background: transparent;
+  border: 3px solid rgb(103, 184, 241);
+  border-radius: 50%;
+  color: rgb(103, 184, 241);
+}
 #menubuttons {
   position: absolute;
   top: 40%;
