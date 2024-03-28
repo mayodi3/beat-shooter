@@ -1,102 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BEAT SHOOTER</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <img src="assets/UI/loading.gif"  id="loading">
-    <!-- First Page -->
-    <div id="firstPage">
-      <img id="play" src="assets/UI/play.png" >
-      <img src="assets/logo/GameLogo.png" id="gameLogo" />
-      <h2 id="text">CLICK HERE TO PLAY !</h2>
-      <img src="assets/UI/arrowDown.gif"  id="arrowDown1">
-    </div>
 
-    <!-- Second page -->
-    <div id="largeContainer" class="hide">
-      <img src="assets/UI/arrowDown.gif"  id="arrowDown2">
-      <img src="assets/backgrounds/MenuBg.png" id="MenuBg" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+    }
 
-      <div id="buttonsContainer">
-        <div id="controls">
-          <img src="assets/UI/levelButton.png" id="levelButton" />
-        </div>
-        <div id="controls">
-          <img src="assets/UI/exit.png"  id="exitLevel">
-        </div>
-      </div>
-    </div>
-    <!-- Third Page -->
-    <div class="level-buttons hide">
-      <div><p id="paragraph">1</p><img src="assets/UI/level1.png" id="level1Button"></img></div>
-      <div><p id="paragraph">2</p><img src="assets/UI/level1.png" id="level2Button"></img></div>
-      <div><p id="paragraph">3</p><img src="assets/UI/level1.png" id="level3Button"></img></div>
-      <div><p id="paragraph">4</p><img src="assets/UI/level1.png" id="level4Button"></img></div>
-      <div><p id="paragraph">5</p><img src="assets/UI/level1.png" id="level5Button"></img></div>
-      <div><p id="paragraph">6</p><img src="assets/UI/level1.png" id="level6Button"></img></div>
-      <div><p id="paragraph">7</p><img src="assets/UI/level1.png" id="level7Button"></img></div>
-    </div>
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
 
-     <!-- Audio Data Setup -->
-     <div id="audio" class="hide">
-      <input type="file" id="fileUpload" />
-      <audio id="audio1" controls autoplay></audio>
-    </div>
+    input {
+      background: transparent;
+      color: white;
+      height: 4vh;
+      width: 50vw;
+    }
 
-    <!-- Counter Page -->
-    <img src="assets/UI/counter.gif" id="counter" class="hide">
-    <audio src="assets/sounds/counter.mp3" id="audioCounter" class="hide"></audio>
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
+    button {
+      margin-top: 10px;
+      height: 5vh;
+      width: 52vw;
+      font-weight: bolder;
+    }
 
-    <!-- Fourth Page -->
-    <canvas id="canvas1"></canvas>
-    <div class="controls hide">
-      <button id="smallaserBtn" class="laser laser-active-hover">S</button>
-      <button id="biglaserBtn" class="laser laser-active-hover">B</button>
-      <img src="assets/UI/pause.png" id="pause">
-      <img src="assets/UI/playbutton.png" id="playbutton">
-      <button id="menubuttons">MAIN</button>
-      <button id="exitMain">EXIT</button>
-      <button id="musicPlay">M</button>
-    </div>
+    .login,
+    .forgot-password {
+      display: none;
+    }
+  </style>
+</head>
 
-  
+<body>
+  <div class="register" id="registerForm">
+    <h1>Create new</h1>
+    <h1>Account</h1>
+    <p>Already a user? <a href="#" id="loginLink">Login here</a></p>
+    <form id="registrationForm">
+      <label for="username">NAME</label>
+      <input required placeholder="enter your username here" type="text" name="username" id="username-register" />
+      <label for="email">EMAIL</label>
+      <input required placeholder="example@gmail.com" type="email" name="email" id="email-register" />
+      <label for="password">PASSWORD</label>
+      <input required placeholder="your preferred password" type="password" name="password" id="password-register" />
+      <label for="DOB">DATE OF BIRTH</label>
+      <input required type="date" name="DOB" id="DOB-register" />
+      <button type="submit" id="register">sign up</button>
+      <p id="signUpMessage"></p>
+    </form>
+  </div>
+  <div class="login" id="loginForm">
+    <h1>Login</h1>
+    <p>Sign in to continue</p>
+    <form id="loginForm">
+      <label for="email">EMAIL</label>
+      <input placeholder="example@gmail.com" type="email" name="email" id="email-login" />
+      <label for="password">PASSWORD</label>
+      <input placeholder="enter your password to sign in" type="password" name="password" id="password-login" />
+      <button type="submit" id="login">log In</button>
+      <p><a href="#" id="forgotPasswordLink">Forgot password?</a></p>
+      <p>New User?<a href="#" id="registerLink">Sign Up</a></p>
+      <p id="loginMessage"></p>
+    </form>
+  </div>
+  <div class="forgot-password" id="forgotPasswordForm">
+    <h1>Reset Password</h1>
+    <p>Enter your email to reset your password</p>
+    <form id="resetForm">
+      <label for="email">EMAIL</label>
+      <input placeholder="example@gmail.com" type="email" name="email" id="email-reset" />
+      <button type="submit" id="reset">Reset Password</button>
+      <p id="resetMessage"></p>
+      <p><a href="#" id="backLink">Back to login</a></p>
+    </form>
+  </div>
+  <script type="module" defer>
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword, sendPasswordResetEmail
+    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc
+    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-    <!-- Invisible ones -->
-    <div class="assets hide">
-      <!-- Enemies -->
-      <img src="assets/enemies/beetle.png" id="beetle" />
-      <img src="assets/enemies/rhinocrack.png" id="rhinocrack" />
-      <img src="assets/enemies/eagleshoot.png" id="eagleshoot" />
-      <img src="assets/enemies/lobsterburst.png" id="lobsterburst" />
-      <img src="assets/enemies/phantom.png" id="phantom" />
-      <img src="assets/enemies/squidward.png" id="squidward" />
-      <img src="assets/enemies/locust.png" id="locust" />
-      <img
-        src="assets/utilities/eagleshootprojectile.png"
-        id="eagleshootprojectile"
-      />
-      <!-- Player -->
-      <img src="assets/players/ship.png" id="ship" />
-      <img src="assets/utilities/shipJets.png" id="shipJets" />
-      <!-- Boss -->
-      <img src="assets/enemies/boss.png" id="boss" />
-      <img src="assets/UI/gameOver.png" id="gameOver">
-    </div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDMbXl3RV7eY7mI-EJrsaBoU3pUQbSl_5g",
+      authDomain: "bshoot-d82b3.firebaseapp.com",
+      projectId: "bshoot-d82b3",
+      storageBucket: "bshoot-d82b3.appspot.com",
+      messagingSenderId: "438934160281",
+      appId: "1:438934160281:web:b05997bd644243e59dc908",
+      measurementId: "G-MMJGVEMTJW",
+    };
 
-    <!-- Sounds of the game -->
-    <div id="sounds" style="display: none;">
-      <audio src="assets/sounds/boss.wav" id="bossound"></audio>
-      <audio src="assets/sounds/click.wav" id="click"></audio>
-      <audio src="assets/sounds/lose.mp3" id="lose"></audio>
-      <audio src="assets/sounds/newgame.mp3" id="newGame"></audio>
-      <audio src="assets/sounds/win.mp3" id="win"></audio>
-    </div>
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+    const db = getFirestore(app);
 
-    <script src="engine.js" type="module"></script>
-  </body>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      // creating new user
+      const registrationForm = document.getElementById("registerForm");
+      registrationForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const username = document.getElementById("username-register").value;
+        const email = document.getElementById("email-register").value;
+        const password = document.getElementById("password-register").value;
+        const message = document.getElementById("signUpMessage");
+
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            const userData = {
+              name: username,
+              userEmail: email,
+              dateCreated: Date.now()
+            };
+            return setDoc(doc(db, "users", user.uid), userData);
+          })
+          .then(() => {
+            message.style.color = "greenYellow";
+            message.innerText = "Signed up successfully!";
+            setTimeout(() => {
+              registrationForm.style.display = "none";
+              loginForm.style.display = "flex";
+            }, 500);
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            message.style.color = "red";
+            message.innerText = "Failed to sign up!";
+            console.error(errorCode + " : ", errorMessage);
+          });
+      });
+
+      // Login a user
+      const loginLink = document.getElementById("loginLink")
+      const loginForm = document.getElementById("loginForm");
+      loginLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        registrationForm.style.display = "none";
+        loginForm.style.display = "flex";
+      });
+      const registerLink = document.getElementById("registerLink")
+      registerLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        registrationForm.style.display = "flex";
+        loginForm.style.display = "none";
+      });
+      loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const email = document.getElementById("email-login").value;
+        const password = document.getElementById("password-login").value;
+        const message = document.getElementById("loginMessage");
+
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            message.style.color = "greenYellow";
+            message.innerText = "Welcome Back!";
+            setTimeout(() => {
+              loginForm.style.display = "none";
+              window.location.href = "main.html"; // Redirect to the main page after login
+            }, 500);
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            message.style.color = "red";
+            message.innerText = errorMessage;
+            console.error(errorCode + " : ", errorMessage);
+          });
+      });
+
+      // Reseting the password of the user
+      const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+      const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+      forgotPasswordLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        loginForm.style.display = "none";
+        forgotPasswordForm.style.display = "flex";
+      });
+      const backLink = document.getElementById("backLink")
+      backLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        loginForm.style.display = "flex";
+        forgotPasswordForm.style.display = "none";
+      });
+      const resetForm = document.getElementById("resetForm");
+      resetForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const email = document.getElementById("email-reset").value;
+        const message = document.getElementById("resetMessage");
+
+        sendPasswordResetEmail(email)
+          .then(() => {
+            message.style.color = "greenYellow";
+            message.innerText = "Password reset email sent!";
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            message.style.color = "red";
+            message.innerText = "Error sending password reset email.";
+            console.error(errorCode + " : ", errorMessage);
+          });
+      });
+    });
+  </script>
+</body>
+
 </html>
